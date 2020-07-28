@@ -1,7 +1,7 @@
 # Django Machine Learning With Keras
 
 
-This repository aims to show a simple example of a machine learning project using django and Keras.
+This repository aims to show a simple example of a machine learning project using Keras.
 The program determines whether or not the image is infected with coronavirus
 
 Steps to get started
