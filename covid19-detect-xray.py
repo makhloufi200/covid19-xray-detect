@@ -52,7 +52,7 @@ np.random.shuffle(s)
 images=images[s]
 labels=labels[s]
 
-#Make a variable num_classes which is the total number of animal
+#Make a variable num_classes which is the total number of images
 # categories and a variable data_length which is size of dataset
 num_classes=len(np.unique(labels))
 data_length=len(images)
@@ -118,22 +118,33 @@ def get_image_result(label):
         return "Normal"
 
 def predict_image(file):
-    print("Predicting .................................")
-    ar=convert_to_array(file)
-    ar=ar/255
-    label=1
-    a=[]
-    a.append(ar)
-    a=np.array(a)
-    score=model.predict(a,verbose=1)
-    print(score)
-    label_index=np.argmax(score)
-    print(label_index)
-    acc=np.max(score)
-    animal=get_image_result(label_index)
-    print(animal)
-    print("The predicted X-Ray Image is a "+animal+" with accuracy =    "+str(acc))
+		print("Predicting .................................")
+		ar=convert_to_array(file)
+		ar=ar/255
+		label=1
+		a=[]
+		a.append(ar)
+		a=np.array(a)
+		score=model.predict(a,verbose=1)
+		print(score)
+		label_index=np.argmax(score)
+		print(label_index)
+		acc=np.max(score)
+		xray_image=get_image_result(label_index)
+		print(xray_image)
+		print("The predicted X-Ray Image is a "+xray_image+" with accuracy =    "+str(acc))
+		# release resources
+		img = cv2.imread(file)
+		position = ((int) (img.shape[1]/2 - 268/2), (int) (img.shape[0]/2 - 36/2))
+		position1 = ((int) (img.shape[1]/2 - 268/2), (int) ((img.shape[0]/2 - 36/2)+80))
+		cv2.putText(img,"With: " +'{:2.2%}'.format(acc),position1,
+             cv2.FONT_HERSHEY_SIMPLEX, 2, (209, 80, 0, 255),2)
+		cv2.putText(img, xray_image,position,
+             cv2.FONT_HERSHEY_SIMPLEX, 3, (209, 80, 0, 255),2)
+		cv2.imshow("frame",img)
+		cv2.waitKey()
+		cv2.destroyAllWindows()
 
-#predict_animal("n.jpg")
-#predict_animal("v.png")
+#predict_image("n.jpeg")
+#predict_image("v.png")
 predict_image("p.jpeg")
