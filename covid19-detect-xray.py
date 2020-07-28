@@ -135,6 +135,7 @@ def predict_image(file):
 		print("The predicted X-Ray Image is a "+xray_image+" with accuracy =    "+str(acc))
 		# release resources
 		img = cv2.imread(file)
+		
 		position = ((int) (img.shape[1]/2 - 268/2), (int) (img.shape[0]/2 - 36/2))
 		position1 = ((int) (img.shape[1]/2 - 268/2), (int) ((img.shape[0]/2 - 36/2)+80))
 		cv2.putText(img,"With: " +'{:2.2%}'.format(acc),position1,
@@ -145,6 +146,4 @@ def predict_image(file):
 		cv2.waitKey()
 		cv2.destroyAllWindows()
 
-#predict_image("n.jpeg")
-#predict_image("v.png")
-predict_image("p.jpeg")
+predict_image("test.png")
